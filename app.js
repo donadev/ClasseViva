@@ -11,9 +11,17 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
 
+express.response.error = function(message) {
+    return this.send({error: message, success: false});
+};
+express.response.success = function(data) {
+    return this.send({success: true, data: data});
+};
 var app = express();
-
+global._ = require("lodash");
+global.BASE_PATH = "https://web.spaggiari.eu/home/app/default";
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -28,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
