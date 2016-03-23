@@ -25,6 +25,23 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+ var boot = function () {
+     server.listen(port, function(){
+         console.info('Express server listening on port ' + app.get('port'));
+     });
+ }
+ var shutdown = function() {
+     server.close();
+ }
+
+ if(require.main === module) {
+     boot();
+ } else {
+     exports.boot = boot;
+     exports.shutdown = shutdown;
+     exports.port = app.get('port');
+ }
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
