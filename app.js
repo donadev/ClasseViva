@@ -1,3 +1,7 @@
+require('babel-register')({
+   presets: [ 'es2015' ]
+});
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
