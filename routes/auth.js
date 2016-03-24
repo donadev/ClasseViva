@@ -7,7 +7,7 @@ router.post('/login', (req, res, next) => {
   var password = req.body.password;
   Requester.login(school, code, password).then((response) => {
       if(response.status == 302) res.success(response.cookies["PHPSESSID"]);
-      else next("Credenziali errate");
+      else res.error("Credenziali errate");
   }).catch((response) => {
       next(response.error);
   });
